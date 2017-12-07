@@ -2,6 +2,9 @@ import Vapor
 import HTTP
 
 public final class APIErrorMiddleware: Middleware {
+    
+    public init() {}
+    
     public func respond(to request: Request, chainingTo next: Responder) throws -> Response {
         let message: String
         let status: Status?
