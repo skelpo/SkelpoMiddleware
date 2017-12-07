@@ -5,6 +5,7 @@ let package = Package(
     products: [
         .library(name: "APIMiddleware", targets: ["APIMiddleware"]),
         .library(name: "AuthMiddleware", targets: ["AuthMiddleware"]),
+        .library(name: "SkelpoMiddleware", targets: ["AuthMiddleware", "APIMiddleware"]),
     ],
     dependencies: [
         .package(url: "https://github.com/vapor/vapor.git", .upToNextMajor(from: "2.1.0")),
