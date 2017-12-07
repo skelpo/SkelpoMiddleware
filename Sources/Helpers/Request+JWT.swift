@@ -3,7 +3,7 @@ import JWT
 import AuthProvider
 
 extension Request {
-    func parseJWT() throws -> JWT {
+    public func parseJWT() throws -> JWT {
         guard let authHeader = auth.header else {
             throw AuthenticationError.noAuthorizationHeader
         }
