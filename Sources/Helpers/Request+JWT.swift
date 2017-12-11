@@ -1,6 +1,8 @@
+import Store
 import HTTP
 import JWT
 import AuthProvider
+import JWTProvider
 
 extension Request {
     public func parseJWT() throws -> JWT {
@@ -13,5 +15,9 @@ extension Request {
         }
         
         return try JWT(token: bearer.string)
+    }
+    
+    public var payload: JSON {
+        return jwtPayload!
     }
 }
