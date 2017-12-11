@@ -3,3 +3,5 @@
 import JSON
 
 public var jwtPayload: JSON?
+
+public var teamIDs: [Int]?
