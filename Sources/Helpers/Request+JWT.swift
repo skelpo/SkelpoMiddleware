@@ -28,7 +28,7 @@ extension Request {
     }
     
     public func teams()throws -> [Int] {
-        guard let teams = teamIDs else {
+        guard let teams = self.storage["skelpo_teams"] as? [Int] else {
             throw MiddlewareError.middlewareNotRegistered(TeamIDMiddleware.self)
         }
         return teams
