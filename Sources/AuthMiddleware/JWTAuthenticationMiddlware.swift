@@ -24,8 +24,7 @@ public final class JWTAuthenticationMiddleware: Middleware {
         let jwt = try request.parseJWT()
         let signer = try self.signer(for: jwt)
         _ = try request.jwt(verifyUsing: signer, and: claims)
-        
-        jwtPayload = jwt.payload
+        request.storage["skelpo-payload"] = jwt.payload
         
         return try next.respond(to: request)
     }

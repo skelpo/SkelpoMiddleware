@@ -21,7 +21,7 @@ extension Request {
     }
     
     public func payload()throws -> JSON {
-        guard let payload = jwtPayload else {
+        guard let payload = self.storage["skelpo-payload"] as? JSON else {
             throw MiddlewareError.middlewareNotRegistered(JWTAuthenticationMiddleware.self)
         }
         return payload
