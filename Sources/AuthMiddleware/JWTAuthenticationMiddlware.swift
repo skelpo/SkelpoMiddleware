@@ -1,4 +1,3 @@
-import Store
 import Vapor
 import HTTP
 import JWTProvider

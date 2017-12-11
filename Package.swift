@@ -13,11 +13,10 @@ let package = Package(
     ],
     targets: [
         .target(name: "SkelpoMiddleware", dependencies: ["Errors", "Helpers", "AuthMiddleware", "APIMiddleware"]),
-        .target(name: "AuthMiddleware", dependencies: ["Store", "Errors", "Helpers", "Vapor", "JWTProvider"]),
-        .target(name: "APIMiddleware", dependencies: ["Store", "Errors", "Helpers", "Vapor"]),
-        .target(name: "Helpers", dependencies: ["Store", "Errors", "Vapor", "JWTProvider"]),
-        .target(name: "Errors", dependencies: ["Store", "Vapor", "JWTProvider"]),
-        .target(name: "Store", dependencies: ["Vapor", "JWTProvider"]),
+        .target(name: "AuthMiddleware", dependencies: ["Errors", "Helpers", "Vapor", "JWTProvider"]),
+        .target(name: "APIMiddleware", dependencies: ["Errors", "Helpers", "Vapor"]),
+        .target(name: "Helpers", dependencies: ["Errors", "Vapor", "JWTProvider"]),
+        .target(name: "Errors", dependencies: ["Vapor", "JWTProvider"]),
         .testTarget(name: "SkelpoMiddlewareTests", dependencies: ["APIMiddleware"]),
     ]
 )

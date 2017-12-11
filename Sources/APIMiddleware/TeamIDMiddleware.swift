@@ -1,6 +1,5 @@
 import Vapor
 import Helpers
-import Store
 
 public final class TeamIDMiddleware: Middleware {
     public func respond(to request: Request, chainingTo next: Responder) throws -> Response {
