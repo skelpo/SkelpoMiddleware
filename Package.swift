@@ -12,9 +12,10 @@ let package = Package(
         .package(url: "https://github.com/vapor/jwt-provider.git", .exact("1.3.0"))
     ],
     targets: [
-        .target(name: "APIMiddleware", dependencies: ["Helpers", "Vapor"]),
-        .target(name: "AuthMiddleware", dependencies: ["Helpers", "Vapor", "JWTProvider"]),
-        .target(name: "Helpers", dependencies: ["Vapor", "JWTProvider"]),
+        .target(name: "APIMiddleware", dependencies: ["Store", "Helpers", "Vapor"]),
+        .target(name: "AuthMiddleware", dependencies: ["Store", "Helpers", "Vapor", "JWTProvider"]),
+        .target(name: "Helpers", dependencies: ["Store", "Vapor", "JWTProvider"]),
+        .target(name: "Store", dependencies: ["Vapor", "JWTProvider"]),
         .testTarget(name: "SkelpoMiddlewareTests", dependencies: ["APIMiddleware"]),
     ]
 )
