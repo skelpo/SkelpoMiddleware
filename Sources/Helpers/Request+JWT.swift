@@ -2,8 +2,6 @@ import HTTP
 import JWT
 import AuthProvider
 import JWTProvider
-import AuthMiddleware
-import APIMiddleware
 import Errors
 
 extension Request {
@@ -21,14 +19,14 @@ extension Request {
     
     public func payload()throws -> JSON {
         guard let payload = self.storage["skelpo-payload"] as? JSON else {
-            throw MiddlewareError.middlewareNotRegistered(JWTAuthenticationMiddleware.self)
+            throw MiddlewareError.middlewareNotRegistered("JWTAuthenticationMiddleware")
         }
         return payload
     }
     
     public func teams()throws -> [Int] {
         guard let teams = self.storage["skelpo_teams"] as? [Int] else {
-            throw MiddlewareError.middlewareNotRegistered(TeamIDMiddleware.self)
+            throw MiddlewareError.middlewareNotRegistered("TeamIDMiddleware")
         }
         return teams
     }
