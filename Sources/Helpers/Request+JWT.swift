@@ -24,10 +24,19 @@ extension Request {
         return payload
     }
     
-    public func teams()throws -> [Int] {
-        guard let teams = self.storage["skelpo_teams"] as? [Int] else {
+    @discardableResult
+    public func teams(_ teams: [Int]? = nil)throws -> [Int] {
+        let session = try self.assertSession()
+        if let ids = teams {
+            try session.data.set("teams", ids)
+        }
+        
+        if let teams: [Int] = try session.data.get("teams") {
+            return teams
+        } else if let teams = self.storage["skelpo_teams"] as? [Int] {
+            return teams
+        } else {
             throw MiddlewareError.middlewareNotRegistered("TeamIDMiddleware")
         }
-        return teams
     }
 }
