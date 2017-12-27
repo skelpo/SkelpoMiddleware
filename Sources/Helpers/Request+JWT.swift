@@ -4,6 +4,8 @@ import AuthProvider
 import JWTProvider
 import Errors
 
+public let teamMiddlewareKey = "team_id_middleware_registered"
+
 extension Request {
     public func parseJWT() throws -> JWT {
         guard let authHeader = auth.header else {
