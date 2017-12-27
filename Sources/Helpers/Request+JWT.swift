@@ -38,7 +38,11 @@ extension Request {
         } else if let teams = self.storage["skelpo_teams"] as? [Int] {
             return teams
         } else {
-            throw MiddlewareError.middlewareNotRegistered("TeamIDMiddleware")
+            if let _ = self.storage[teamMiddlewareKey] {
+                return []
+            } else {
+                throw MiddlewareError.middlewareNotRegistered("TeamIDMiddleware")
+            }            
         }
     }
 }
