@@ -9,6 +9,7 @@ public final class TeamIDMiddleware: Middleware {
         let payload = try request.payload()
         let teams: [Int]? = try payload.get("team_ids")
         request.storage["skelpo_teams"] = teams
+        request.storage[teamMiddlewareKey] = true
         
         return try next.respond(to: request)
     }
