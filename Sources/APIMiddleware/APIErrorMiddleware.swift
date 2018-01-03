@@ -20,7 +20,8 @@ public final class APIErrorMiddleware: Middleware {
             message = "\(error)"
             status = nil
         }
-        return try Response(status: status ?? .badRequest, body: JSON(node: ["error": message]))
+        return try Response(status: status ?? .badRequest, headers: [.contentType: "application/json"], body: JSON(node: ["error": message]))
+        
     }
 }
 
