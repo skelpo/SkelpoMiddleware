@@ -20,29 +20,29 @@ extension Request {
         return try JWT(unverifiedFrom: sig)
     }
     
-    public func payload()throws -> JSON {
-        guard let payload = self.storage["skelpo-payload"] as? JSON else {
-            throw MiddlewareError.middlewareNotRegistered("JWTAuthenticationMiddleware")
+    public func payload<Payload>(as payloadType: Payload.Type)throws -> Payload {
+        guard let payload = try self.get("skelpo-payload") else {
+            throw SkelpoMiddlewareError.middlewareNotRegistered("JWTAuthenticationMiddleware")
         }
         return payload
     }
     
     @discardableResult
     public func teams(_ teams: [Int]? = nil)throws -> [Int] {
-        let session = try self.assertSession()
+        let session = try self.session()
         if let ids = teams {
-            try session.data.set("teams", ids)
+            session.data.storage["teams"] = ids
         }
         
-        if let teams: [Int] = try session.data.get("teams") {
+        if let teams: [Int] = session.data.storage["teams"] as? [Int] {
             return teams
-        } else if let teams = self.storage["skelpo_teams"] as? [Int] {
+        } else if let teams = try self.get("skelpo_teams") as? [Int] {
             return teams
         } else {
-            if let _ = self.storage[teamMiddlewareKey] {
+            if let _ = try self.get(teamMiddlewareKey) {
                 return []
             } else {
-                throw MiddlewareError.middlewareNotRegistered("TeamIDMiddleware")
+                throw SkelpoMiddlewareError.middlewareNotRegistered("TeamIDMiddleware")
             }            
         }
     }
