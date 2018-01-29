@@ -1,7 +1,8 @@
 import Vapor
 import HTTP
+import Foundation
 
-public enum MiddlewareError: AbortError {
+public enum SkelpoMiddlewareError: AbortError {
     case middlewareNotRegistered(String)
     
     public var status: Status {
