@@ -8,15 +8,16 @@ let package = Package(
         .library(name: "SkelpoMiddleware", targets: ["SkelpoMiddleware"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/vapor/vapor.git", .upToNextMajor(from: "2.1.0")),
-        .package(url: "https://github.com/vapor/jwt-provider.git", .exact("1.3.0"))
+        .package(url: "https://github.com/vapor/vapor.git", .branch("beta")),
+        .package(url: "https://github.com/vapor/jwt.git", .branch("beta")),
+        .package(url: "https://github.com/vapor/auth.git", .branch("beta"))
     ],
     targets: [
         .target(name: "SkelpoMiddleware", dependencies: ["Errors", "Helpers", "AuthMiddleware", "APIMiddleware"]),
-        .target(name: "AuthMiddleware", dependencies: ["Errors", "Helpers", "Vapor", "JWTProvider"]),
+        .target(name: "AuthMiddleware", dependencies: ["Errors", "Helpers", "Vapor", "JWT", "Authentication"]),
         .target(name: "APIMiddleware", dependencies: ["Errors", "Helpers", "Vapor"]),
-        .target(name: "Helpers", dependencies: ["Errors", "Vapor", "JWTProvider"]),
-        .target(name: "Errors", dependencies: ["Vapor", "JWTProvider"]),
+        .target(name: "Helpers", dependencies: ["Errors", "Vapor", "JWT", "Authentication"]),
+        .target(name: "Errors", dependencies: ["Vapor", "JWT"]),
         .testTarget(name: "SkelpoMiddlewareTests", dependencies: ["APIMiddleware"]),
     ]
 )
