@@ -1,22 +1,23 @@
-import HTTP
+import Vapor
 import JWT
-import AuthProvider
-import JWTProvider
+import Authentication
 import Errors
+import Crypto
+import Foundation
 
 public let teamMiddlewareKey = "team_id_middleware_registered"
 
 extension Request {
-    public func parseJWT() throws -> JWT {
-        guard let authHeader = auth.header else {
-            throw AuthenticationError.noAuthorizationHeader
+    public func parseJWT<T>(to payloadType: T.Type) throws -> JWT<T> {
+        guard let bearer = self.headers.bearerAuthorization?.token else {
+            throw Abort(.unauthorized)
+        }
+        let encoded = Base64Encoder().encode(string: bearer)
+        guard let sig = Data(base64Encoded: encoded) else {
+            throw Abort(.badRequest)
         }
         
-        guard let bearer = authHeader.bearer else {
-            throw AuthenticationError.invalidBearerAuthorization
-        }
-        
-        return try JWT(token: bearer.string)
+        return try JWT(unverifiedFrom: sig)
     }
     
     public func payload()throws -> JSON {
