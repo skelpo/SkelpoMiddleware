@@ -20,6 +20,10 @@ public final class JWTAuthenticationMiddleware: Middleware {
     }
     
     public func respond(to request: Request, chainingTo next: Responder) throws -> Response {
+        request.services.register(isSingleton: true) { (container) -> (Service) in
+            return Storage()
+        }
+        
         let jwt = try request.parseJWT()
         let signer = try self.signer(for: jwt)
         _ = try request.jwt(verifyUsing: signer, and: claims)
