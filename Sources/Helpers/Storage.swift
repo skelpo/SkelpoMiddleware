@@ -1,5 +1,7 @@
 import Service
 
 public struct Storage: Service {
-    var cache: [String: Codable] = [:]
+    public var cache: [String: Codable] = [:]
+    
+    public init() {}
 }
