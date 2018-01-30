@@ -8,7 +8,7 @@ import Foundation
 public let teamMiddlewareKey = "team_id_middleware_registered"
 
 extension Request {
-    public func parseJWT<T>(to payloadType: T.Type) throws -> JWT<T> {
+    public func parseJWT<Payload: JWTPayload>(to payloadType: Payload.Type) throws -> JWT<Payload> {
         guard let bearer = self.headers.bearerAuthorization?.token else {
             throw Abort(.unauthorized)
         }
