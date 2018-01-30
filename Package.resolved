@@ -60,7 +60,7 @@
         "repositoryURL": "https://github.com/vapor/engine.git",
         "state": {
           "branch": "beta",
-          "revision": "479fcd71470698305d6544fcc8f8bcde30971a43",
+          "revision": "f4cf3d5819437445531bcc02da137618e0e444a2",
           "version": null
         }
       },
@@ -123,7 +123,7 @@
         "repositoryURL": "https://github.com/vapor/vapor.git",
         "state": {
           "branch": "beta",
-          "revision": "5d0a48a4dc363fa8762583b2f59991ed6cddcad2",
+          "revision": "a3cca90ebb0a48b492b87df352fe13fb0a6c9dc2",
           "version": null
         }
       }
