@@ -1,5 +1,5 @@
 import Service
 
-internal struct Storage: Service {
+public struct Storage: Service {
     var cache: [String: Codable] = [:]
 }
