@@ -26,10 +26,10 @@ extension Request {
     public func teams(_ teams: [Int]? = nil)throws -> [Int] {
         let session = try self.session()
         if let ids = teams {
-            session.data.storage["teams"] = ids
+            try session.set("teams", to: ids)
         }
         
-        if let teams: [Int] = session.data.storage["teams"] as? [Int] {
+        if let teams: [Int] = try session.get("teams", as: [Int]?.self) {
             return teams
         } else if let teams = try self.get("skelpo_teams") as? [Int] {
             return teams
