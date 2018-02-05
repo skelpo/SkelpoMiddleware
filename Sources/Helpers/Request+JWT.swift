@@ -15,11 +15,11 @@ extension Request {
         return bearer
     }
     
-    public func payload<Payload: JWTPayload>(as payloadType: Payload.Type)throws -> Payload {
-        guard let payload = try self.get("skelpo-payload") as? Payload else {
+    public func payload<Payload: Decodable>(as payloadType: Payload.Type)throws -> Payload {
+        guard let data = try self.get("skelpo-payload") as? Data else {
             throw SkelpoMiddlewareError.middlewareNotRegistered("JWTAuthenticationMiddleware")
         }
-        return payload
+        return try JSONDecoder().decode(Payload.self, from: data)
     }
     
     @discardableResult
