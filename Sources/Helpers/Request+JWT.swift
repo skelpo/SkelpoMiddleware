@@ -9,7 +9,7 @@ public let teamMiddlewareKey = "team_id_middleware_registered"
 
 extension Request {
     public func getJWT()throws -> String {
-        guard let bearer = self.headers.bearerAuthorization?.token else {
+        guard let bearer = self.http.headers.bearerAuthorization?.token else {
             throw Abort(.unauthorized)
         }
         return bearer
