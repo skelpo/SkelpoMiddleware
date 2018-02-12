@@ -1,5 +1,4 @@
 import Vapor
-import JWT
 import Helpers
 
 public final class TeamIDMiddleware: Middleware {
@@ -15,9 +14,6 @@ public final class TeamIDMiddleware: Middleware {
     }
 }
 
-fileprivate class TeamIDs: JWTPayload {
+fileprivate class TeamIDs: Decodable {
     let ids: [Int]?
-    
-    // This method is empty because `JWTAuthenticationMiddleware` already varified the payload.
-    func verify() throws {}
 }
