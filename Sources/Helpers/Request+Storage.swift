@@ -7,7 +7,7 @@ extension Request {
     }
     
     public func set(_ key: String, to value: Codable)throws {
-        var storage = try self.privateContainer.make(Storage.self, for: Request.self)
+        let storage = try self.privateContainer.make(Storage.self, for: Request.self)
         storage.cache[key] = value
     }
 }
