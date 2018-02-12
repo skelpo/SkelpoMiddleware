@@ -1,8 +1,6 @@
 import Vapor
-import JWT
 import Authentication
 import Errors
-import Crypto
 import Foundation
 
 public let teamMiddlewareKey = "team_id_middleware_registered"

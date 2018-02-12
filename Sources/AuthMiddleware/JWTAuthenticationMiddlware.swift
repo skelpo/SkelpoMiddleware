@@ -1,7 +1,5 @@
 import Vapor
-import HTTP
 import JWT
-import Authentication
 import Helpers
 import Foundation
 
