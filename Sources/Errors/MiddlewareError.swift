@@ -1,25 +1,20 @@
 import Vapor
-import HTTP
-import Foundation
+import Debugging
 
-public enum SkelpoMiddlewareError: AbortError {
-    case middlewareNotRegistered(String)
+public struct SkelpoMiddlewareError: Debuggable, AbortError {
+    public let identifier: String
+    public let status: HTTPStatus
+    public let reason: String
     
-    public var identifier: String {
-        switch self {
-        case .middlewareNotRegistered: return "middlewareNotRegistered"
-        }
+    public init(identifier: String, status: HTTPStatus, reason: String) {
+        self.identifier = identifier
+        self.status = status
+        self.reason = reason
     }
-    
-    public var status: HTTPStatus {
-        switch self {
-        case .middlewareNotRegistered: return .internalServerError
-        }
-    }
-    
-    public var reason: String {
-        switch self {
-        case let .middlewareNotRegistered(middleware): return "Make sure you register \(middleware) with your routes"
-        }
+}
+
+extension SkelpoMiddlewareError {
+    public static func middlewareNotRegistered(_ middleware: String) -> SkelpoMiddlewareError {
+        return self.init(identifier: "middlewareNotRegistered", status: .internalServerError, reason: "Make sure you register \(middleware) with your routes")
     }
 }
