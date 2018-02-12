@@ -1,5 +1,4 @@
 import Vapor
-import HTTP
 import Foundation
 
 public final class APIErrorMiddleware: Middleware {
@@ -22,18 +21,19 @@ public final class APIErrorMiddleware: Middleware {
             status = nil
         }
         
-        let content = try JSONEncoder().encode(["error": message])
-        
-        let headers: HTTPHeaders = [.contentType: "application/json"]
-        let body = HTTPBody(content)
-        
-        let httpResponse = HTTPResponse(
+        let httpResponse = try HTTPResponse(
             status: status ?? .badRequest,
-            headers: headers,
-            body: body
+            headers: [.contentType: "application/json"],
+            body: ["error": message]
         )
         let response = Response(http: httpResponse, using: request.superContainer)
         
         return Future(response)
+    }
+}
+
+extension Dictionary: HTTPBodyRepresentable where Key: Encodable, Value: Encodable {
+    public func makeBody() throws -> HTTPBody {
+        return try HTTPBody(JSONEncoder().encode(self))
     }
 }
