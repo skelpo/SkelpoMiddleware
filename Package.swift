@@ -8,9 +8,9 @@ let package = Package(
         .library(name: "SkelpoMiddleware", targets: ["SkelpoMiddleware"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/vapor/vapor.git", .branch("3.0.0-beta.2")),
-        .package(url: "https://github.com/vapor/jwt.git", .branch("3.0.0-beta.1")),
-        .package(url: "https://github.com/vapor/auth.git", .branch("2.0.0-beta.1"))
+        .package(url: "https://github.com/vapor/vapor.git", from: "3.0.0-beta.2"),
+        .package(url: "https://github.com/vapor/jwt.git", from: "3.0.0-beta.1"),
+        .package(url: "https://github.com/vapor/auth.git", from: "2.0.0-beta.1")
     ],
     targets: [
         .target(name: "SkelpoMiddleware", dependencies: ["Errors", "Helpers", "AuthMiddleware", "APIMiddleware"]),
