@@ -1,5 +1,6 @@
 import Vapor
 import Debugging
+import Foundation
 
 public struct SkelpoMiddlewareError: Debuggable, AbortError {
     public let identifier: String
