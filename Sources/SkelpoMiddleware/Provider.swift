@@ -5,7 +5,7 @@ public class Provider: Vapor.Provider {
     public static var repositoryName: String = "SkelpoMiddleware"
     
     public func register(_ services: inout Services) throws {
-        services.register(isSingleton: true) { (container) -> (Storage) in
+        services.register() { (container) -> (Storage) in
             return Storage()
         }
     }
