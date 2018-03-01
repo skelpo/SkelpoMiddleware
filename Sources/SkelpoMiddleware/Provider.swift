@@ -4,6 +4,8 @@ import Helpers
 public class Provider: Vapor.Provider {
     public static var repositoryName: String = "SkelpoMiddleware"
     
+    public init () {}
+    
     public func register(_ services: inout Services) throws {
         services.register() { (container) -> (Storage) in
             return Storage()
