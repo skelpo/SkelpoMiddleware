@@ -13,11 +13,20 @@ extension Request {
         return bearer
     }
     
-    public func payload<Payload: Decodable>(as payloadType: Payload.Type)throws -> Payload {
-        guard let data = try self.get("skelpo-payload") as? Data else {
+    public func payload<Payload: Decodable>(as payloadType: Payload.Type = Payload.self)throws -> Payload {
+        guard let payload = try self.get("skelpo-payload") as? Payload else {
             throw SkelpoMiddlewareError.middlewareNotRegistered("JWTAuthenticationMiddleware")
         }
-        return try JSONDecoder().decode(Payload.self, from: data)
+        return payload
+    }
+    
+    public func payloadData<Payload, Object>(storedAs stored: Payload.Type, convertedTo objectType: Object.Type = Object.self)throws -> Object
+        where Payload: Encodable, Object: Decodable {
+            guard let payload = try self.get("skelpo-payload") as? Payload else {
+                throw SkelpoMiddlewareError.middlewareNotRegistered("JWTAuthenticationMiddleware")
+            }
+            let data: Data = try JSONEncoder().encode(payload)
+            return try JSONDecoder().decode(Object.self, from: data)
     }
     
     @discardableResult
