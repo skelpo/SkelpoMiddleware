@@ -1,22 +1,18 @@
+import JWTProvider
+import Foundation
+import Helpers
 import Vapor
 import JWT
-import Helpers
-import Foundation
 
 public final class JWTAuthenticationMiddleware<Payload: JWTPayload>: Middleware {
-    let signerAlgorithm: JWTAlgorithm
-    
-    public init(algorithm: JWTAlgorithm) {
-        self.signerAlgorithm = algorithm
-    }
+    public init() {}
     
     public func respond(to request: Request, chainingTo next: Responder) throws -> Future<Response> {
+        let jwt = try request.make(JWTService.self)
         let accessToken = try request.getJWT()
-        let signer = JWTSigner(algorithm: signerAlgorithm)
-        let jwt = try JWT<Payload>(from: accessToken, verifiedUsing: signer)
+        let payload = try JWT<Payload>(from: accessToken, verifiedUsing: jwt.signer).payload
         
-        try request.set("skelpo-payload", to: JSONEncoder().encode(jwt.payload))
-        
+        try request.set("skelpo-payload", to: payload)
         return try next.respond(to: request)
     }
 }
