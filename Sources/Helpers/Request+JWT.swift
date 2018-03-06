@@ -6,7 +6,7 @@ import Foundation
 public let teamMiddlewareKey = "team_id_middleware_registered"
 
 extension Request {
-    public func getJWT()throws -> String {
+    public func accessToken()throws -> String {
         guard let bearer = self.http.headers.bearerAuthorization?.token else {
             throw Abort(.unauthorized)
         }

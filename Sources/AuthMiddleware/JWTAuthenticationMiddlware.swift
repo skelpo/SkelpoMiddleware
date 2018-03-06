@@ -9,7 +9,7 @@ public final class JWTAuthenticationMiddleware<Payload: JWTPayload>: Middleware 
     
     public func respond(to request: Request, chainingTo next: Responder) throws -> Future<Response> {
         let jwt = try request.make(JWTService.self)
-        let accessToken = try request.getJWT()
+        let accessToken = try request.accessToken()
         let payload = try JWT<Payload>(from: accessToken, verifiedUsing: jwt.signer).payload
         
         try request.set("skelpo-payload", to: payload)
