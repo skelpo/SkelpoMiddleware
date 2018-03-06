@@ -15,8 +15,8 @@
         "repositoryURL": "https://github.com/vapor/auth.git",
         "state": {
           "branch": null,
-          "revision": "145d6ca2790e679279defe34e25006f63c782024",
-          "version": "2.0.0-rc.1"
+          "revision": "0159803fc2cf2e38aeeb3ba4ba42358886923b1b",
+          "version": "2.0.0-rc.2"
         }
       },
       {
@@ -80,6 +80,15 @@
           "branch": null,
           "revision": "f912bda2c059e14f63df4c25ea4c7f703ac2ca77",
           "version": "3.0.0-rc.1"
+        }
+      },
+      {
+        "package": "JWTProvider",
+        "repositoryURL": "git@github.com:skelpo/JWTProvider.git",
+        "state": {
+          "branch": null,
+          "revision": "3fee4787965506ef8508f85e7d6e18a70327a6b3",
+          "version": "0.1.0"
         }
       },
       {

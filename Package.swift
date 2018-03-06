@@ -10,11 +10,12 @@ let package = Package(
     dependencies: [
         .package(url: "https://github.com/vapor/vapor.git", from: "3.0.0-rc"),
         .package(url: "https://github.com/vapor/jwt.git", from: "3.0.0-rc"),
-        .package(url: "https://github.com/vapor/auth.git", from: "2.0.0-rc")
+        .package(url: "https://github.com/vapor/auth.git", from: "2.0.0-rc"),
+        .package(url: "git@github.com:skelpo/JWTProvider.git", from: "0.1.0")
     ],
     targets: [
-        .target(name: "SkelpoMiddleware", dependencies: ["Errors", "Helpers", "AuthMiddleware", "APIMiddleware"]),
-        .target(name: "AuthMiddleware", dependencies: ["Errors", "Helpers", "Vapor", "JWT", "Authentication"]),
+        .target(name: "SkelpoMiddleware", dependencies: ["Errors", "Helpers", "AuthMiddleware", "APIMiddleware", "JWTProvider"]),
+        .target(name: "AuthMiddleware", dependencies: ["Errors", "Helpers", "Vapor", "JWT", "Authentication", "JWTProvider"]),
         .target(name: "APIMiddleware", dependencies: ["Errors", "Helpers", "Vapor"]),
         .target(name: "Helpers", dependencies: ["Errors", "Vapor", "JWT", "Authentication"]),
         .target(name: "Errors", dependencies: ["Vapor", "JWT"]),
