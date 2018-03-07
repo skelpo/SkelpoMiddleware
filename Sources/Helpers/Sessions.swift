@@ -6,7 +6,7 @@ extension Session {
         self[key] = try String(data: JSONEncoder().encode(value), encoding: .utf8)
     }
     
-    public func get<Value: Codable>(_ key: String, as type: Value.Type)throws -> Value {
+    public func get<Value: Codable>(_ key: String, as type: Value.Type = Value.self)throws -> Value {
         guard let data = self[key]?.data(using: .utf8) else {
             throw Abort(.internalServerError, reason: "Unable to convert `String` stored in session to `Data`")
         }
