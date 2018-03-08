@@ -5,30 +5,43 @@ public final class APIErrorMiddleware: Middleware {
     public init() {}
     
     public func respond(to request: Request, chainingTo next: Responder) throws -> Future<Response> {
+        let result = Promise(Response.self)
+        
+        do {
+            return try next.respond(to: request).do({ (response) in
+                result.complete(response)
+            }).catch({ (error) in
+                result.complete(self.response(for: error, with: request))
+            })
+        } catch {
+            result.complete(self.response(for: error, with: request))
+        }
+        
+        return result.future
+    }
+    
+    private func response(for error: Error, with request: Request) -> Response {
         let message: String
         let status: HTTPStatus?
         
-        do {
-            return try next.respond(to: request)
-        } catch let error as AbortError {
+        if let error = error as? AbortError {
             message = error.reason
             status = error.status
-        } catch let error as CustomStringConvertible {
+        } else {
+            let error = error as CustomStringConvertible
             message = error.description
-            status = nil
-        } catch {
-            message = "\(error)"
             status = nil
         }
         
-        let httpResponse = try HTTPResponse(
+        let body = HTTPBody(string: "{\"error\":\"\(message)\"}")
+        
+        let httpResponse = HTTPResponse(
             status: status ?? .badRequest,
             headers: [.contentType: "application/json"],
-            body: ["error": message]
+            body: body
         )
-        let response = Response(http: httpResponse, using: request.superContainer)
         
-        return Future(response)
+        return Response(http: httpResponse, using: request.superContainer)
     }
 }
 
