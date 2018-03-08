@@ -33,20 +33,13 @@ public final class APIErrorMiddleware: Middleware {
             status = nil
         }
         
-        let body = HTTPBody(string: "{\"error\":\"\(message)\"}")
-        
+        let json = (try? JSONEncoder().encode(["error": message])) ?? message.data(using: .utf8) ?? Data()
         let httpResponse = HTTPResponse(
             status: status ?? .badRequest,
             headers: [.contentType: "application/json"],
-            body: body
+            body: HTTPBody(json)
         )
         
         return Response(http: httpResponse, using: request.superContainer)
-    }
-}
-
-extension Dictionary: HTTPBodyRepresentable where Key: Encodable, Value: Encodable {
-    public func makeBody() throws -> HTTPBody {
-        return try HTTPBody(JSONEncoder().encode(self))
     }
 }
