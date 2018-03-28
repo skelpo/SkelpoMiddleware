@@ -5,19 +5,19 @@ public final class APIErrorMiddleware: Middleware {
     public init() {}
     
     public func respond(to request: Request, chainingTo next: Responder) throws -> Future<Response> {
-        let result = Promise(Response.self)
+        let result = request.eventLoop.newPromise(Response.self)
         
         do {
             return try next.respond(to: request).do({ (response) in
-                result.complete(response)
+                result.succeed(result: response)
             }).catch({ (error) in
-                result.complete(self.response(for: error, with: request))
+                result.succeed(result: self.response(for: error, with: request))
             })
         } catch {
-            result.complete(self.response(for: error, with: request))
+            result.succeed(result: self.response(for: error, with: request))
         }
         
-        return result.future
+        return result.futureResult
     }
     
     private func response(for error: Error, with request: Request) -> Response {
@@ -36,8 +36,8 @@ public final class APIErrorMiddleware: Middleware {
         let json = (try? JSONEncoder().encode(["error": message])) ?? message.data(using: .utf8) ?? Data()
         let httpResponse = HTTPResponse(
             status: status ?? .badRequest,
-            headers: [.contentType: "application/json"],
-            body: HTTPBody(json)
+            headers: ["Content-Type": "application/json"],
+            body: HTTPBody(data: json)
         )
         
         return Response(http: httpResponse, using: request.superContainer)
