@@ -78,8 +78,8 @@
         "repositoryURL": "git@github.com:skelpo/JWTProvider.git",
         "state": {
           "branch": null,
-          "revision": "1e43647e258b0459af76ebf199390e78dab260f0",
-          "version": "0.3.0"
+          "revision": "36cefb6d5651b4eb500b531cdb08571e57d6adc6",
+          "version": "0.3.1"
         }
       },
       {
