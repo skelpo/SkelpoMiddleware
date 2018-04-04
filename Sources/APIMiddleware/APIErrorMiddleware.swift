@@ -40,6 +40,6 @@ public final class APIErrorMiddleware: Middleware {
             body: HTTPBody(data: json)
         )
         
-        return Response(http: httpResponse, using: request.superContainer)
+        return Response(http: httpResponse, using: request.sharedContainer)
     }
 }
