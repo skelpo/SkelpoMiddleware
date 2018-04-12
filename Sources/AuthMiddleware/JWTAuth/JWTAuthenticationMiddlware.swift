@@ -1,5 +1,4 @@
 import JWTProvider
-import Foundation
 import Helpers
 import Vapor
 import JWT
