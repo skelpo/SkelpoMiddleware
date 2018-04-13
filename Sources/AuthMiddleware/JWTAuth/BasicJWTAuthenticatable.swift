@@ -29,17 +29,13 @@ extension BasicJWTAuthenticatable {
     public static func authenticate(from body: AuthBody, on request: Request)throws -> Future<Self> {
         let futureUser = try Self.query(on: request).filter(Self.usernameKey == body.username).first().unwrap(or: Abort(.notFound, reason: "Username or password is incorrect"))
         
-        return futureUser.map(to: (String, Self).self) { (found) in
+        return futureUser.flatMap(to: (Payload, Self).self) { (found) in
             guard try BCrypt.verify(body.password, created: found.password) else {
                 throw Abort(.unauthorized, reason: "Username or password is incorrect")
             }
-            let token = try request.accessToken()
-            return (token, found)
+            return try found.accessToken(on: request).map(to: (Payload, Self).self) { ($0, found) }
         }.map(to: Self.self) { (authenticated) in
-            let jwt = try request.make(JWTService.self)
-            let payload = try JWT<Payload>.init(from: Data(authenticated.0.utf8), verifiedUsing: jwt.signer).payload
-            
-            try request.set("skelpo-payload", to: payload)
+            try request.set("skelpo-payload", to: authenticated.0)
             try request.authenticate(authenticated.1)
             
             return authenticated.1
