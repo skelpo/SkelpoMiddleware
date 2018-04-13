@@ -9,10 +9,12 @@ public protocol IdentifiableJWTPayload: JWTPayload {
 }
 
 public protocol JWTAuthenticatable: Authenticatable, Content where Payload.ID == Self.ID {
+    associatedtype AuthBody
     associatedtype Payload: IdentifiableJWTPayload
-    static var usernameKey: KeyPath<Self, String> { get }
-    
-    var password: String { get }
     
     func accessToken(on request: Request)throws -> Future<String>
+    
+    static func authBody(from request: Request)throws -> AuthBody?
+    static func authenticate(from payload: Payload, on request: Request)throws -> Future<Self>
+    static func authenticate(from body: AuthBody, on reques: Request)throws -> Future<Self>
 }
