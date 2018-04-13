@@ -4,18 +4,18 @@ import Fluent
 import Crypto
 import Vapor
 
-protocol BasicJWTAuthenticatable: JWTAuthenticatable where AuthBody == BasicAuthorization, Database: QuerySupporting {
+public protocol BasicJWTAuthenticatable: JWTAuthenticatable where AuthBody == BasicAuthorization, Database: QuerySupporting {
     static var usernameKey: KeyPath<Self, String> { get }
     
     var password: String { get }
 }
 
 extension BasicJWTAuthenticatable {
-    static func authBody(from request: Request)throws -> AuthBody? {
+    public static func authBody(from request: Request)throws -> AuthBody? {
         return request.http.headers.basicAuthorization
     }
     
-    static func authenticate(from payload: Payload, on request: Request)throws -> Future<Self> {        
+    public static func authenticate(from payload: Payload, on request: Request)throws -> Future<Self> {
         return try Self.find(payload.id, on: request).unwrap(
             or: Abort(.notFound, reason: "No user found with the ID from the access token")
         ).map(to: Self.self, { (model) in
@@ -26,7 +26,7 @@ extension BasicJWTAuthenticatable {
         })
     }
     
-    static func authenticate(from body: AuthBody, on request: Request)throws -> Future<Self> {
+    public static func authenticate(from body: AuthBody, on request: Request)throws -> Future<Self> {
         let futureUser = try Self.query(on: request).filter(Self.usernameKey == body.username).first().unwrap(or: Abort(.notFound, reason: "Username or password is incorrect"))
         
         return futureUser.flatMap(to: (String, Self).self) { (found) in
