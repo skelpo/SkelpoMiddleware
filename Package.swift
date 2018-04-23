@@ -17,7 +17,7 @@ let package = Package(
     ],
     targets: [
         .target(name: "SkelpoMiddleware", dependencies: ["JWTMiddleware", "APIMiddleware", "APIErrorMiddleware"]),
-        .target(name: "APIMiddleware", dependencies: ["Vapor", "VaporRequestStorage", "JWTVapor"]),
+        .target(name: "APIMiddleware", dependencies: ["Vapor", "VaporRequestStorage", "JWTMiddleware"]),
         .testTarget(name: "SkelpoMiddlewareTests", dependencies: ["APIMiddleware"]),
     ]
 )
