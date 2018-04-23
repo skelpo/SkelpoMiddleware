@@ -18,10 +18,8 @@ let package = Package(
         .package(url: "https://github.com/skelpo/vapor-request-storage", from: "0.1.0")
     ],
     targets: [
-        .target(name: "SkelpoMiddleware", dependencies: ["Errors", "Helpers", "JWTMiddleware", "APIMiddleware", "JWTVapor", "APIErrorMiddleware", "VaporRequestStorage"]),
-        .target(name: "APIMiddleware", dependencies: ["Errors", "Helpers", "Vapor"]),
-        .target(name: "Helpers", dependencies: ["Errors", "Vapor", "JWT", "Authentication"]),
-        .target(name: "Errors", dependencies: ["Vapor", "JWT"]),
+        .target(name: "SkelpoMiddleware", dependencies: ["JWTMiddleware", "APIMiddleware", "APIErrorMiddleware"]),
+        .target(name: "APIMiddleware", dependencies: ["Vapor", "VaporRequestStorage", "JWTVapor"]),
         .testTarget(name: "SkelpoMiddlewareTests", dependencies: ["APIMiddleware"]),
     ]
 )

@@ -1,5 +1,8 @@
+import VaporRequestStorage
+import JWTMiddleware
 import Vapor
-import Helpers
+
+public let teamMiddlewareKey = "team_id_middleware_registered"
 
 public final class TeamIDMiddleware<PayloadType: Codable>: Middleware {
     public init() {}
