@@ -12,7 +12,7 @@ let package = Package(
         .package(url: "https://github.com/vapor/vapor.git", from: "3.0.0-rc"),
         .package(url: "https://github.com/vapor/jwt.git", from: "3.0.0-rc"),
         .package(url: "https://github.com/vapor/auth.git", from: "2.0.0-rc"),
-        .package(url: "https://github.com/skelpo/JWTVapor.git", from: "0.3.0"),
+        .package(url: "https://github.com/skelpo/JWTVapor.git,", from: "0.3.0"),
         .package(url: "https://github.com/skelpo/JWTMiddleware.git", from: "0.3.0"),
         .package(url: "https://github.com/skelpo/APIErrorMiddleware.git", from: "0.1.0")
     ],
