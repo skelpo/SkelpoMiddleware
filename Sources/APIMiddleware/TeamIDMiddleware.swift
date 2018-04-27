@@ -59,4 +59,12 @@ extension Session {
         }
         return try JSONDecoder().decode(Value.self, from: data)
     }
+    
+    public func get<Value: Codable>(_ key: String, as type: Value?.Type = Value?.self)throws -> Value? {
+        guard let json = self[key] else { return nil }
+        guard let data = json.data(using: .utf8) else {
+            throw Abort(.internalServerError, reason: "Unable to convert `String` stored in session to `Data`")
+        }
+        return try JSONDecoder().decode(Value.self, from: data)
+    }
 }
