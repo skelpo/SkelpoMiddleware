@@ -8,14 +8,14 @@ import Vapor
 public let teamMiddlewareKey = "team_id_middleware_registered"
 
 fileprivate class TeamIDs: Decodable {
-    let ids: [Int]?
+    let teamIDs: [Int]?
 }
 
 public final class TeamIDMiddleware<PayloadType: Codable>: Middleware {
     public init() {}
     
     public func respond(to request: Request, chainingTo next: Responder) throws -> Future<Response> {
-        let teams = try request.payloadData(storedAs: PayloadType.self, convertedTo: TeamIDs.self).ids
+        let teams = try request.payloadData(storedAs: PayloadType.self, convertedTo: TeamIDs.self).teamIDs
  
         try request.set("skelpo_teams", to: teams)
         try request.set(teamMiddlewareKey, to: true)
