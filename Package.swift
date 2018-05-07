@@ -9,11 +9,11 @@ let package = Package(
         .library(name: "SkelpoMiddleware", targets: ["SkelpoMiddleware"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/vapor/vapor.git", from: "3.0.0-rc"),
-        .package(url: "https://github.com/skelpo/JWTVapor.git", from: "0.7.0"),
-        .package(url: "https://github.com/skelpo/JWTMiddleware.git", from: "0.3.0"),
-        .package(url: "https://github.com/skelpo/APIErrorMiddleware.git", from: "0.1.0"),
-        .package(url: "https://github.com/skelpo/vapor-request-storage", from: "0.1.0")
+        .package(url: "https://github.com/vapor/vapor.git", from: "3.0.0"),
+        .package(url: "https://github.com/skelpo/JWTVapor.git", from: "0.9.0"),
+        .package(url: "https://github.com/skelpo/JWTMiddleware.git", from: "0.6.0"),
+        .package(url: "https://github.com/skelpo/APIErrorMiddleware.git", from: "0.3.0"),
+        .package(url: "https://github.com/skelpo/vapor-request-storage", from: "0.3.0")
     ],
     targets: [
         .target(name: "SkelpoMiddleware", dependencies: ["JWTMiddleware", "APIMiddleware", "APIErrorMiddleware"]),
