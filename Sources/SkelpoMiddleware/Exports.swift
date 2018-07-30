@@ -1,4 +1,5 @@
-@_exported import Helpers
-@_exported import AuthMiddleware
+@_exported import APIErrorMiddleware
+@_exported import JWTAuthenticatable
+@_exported import JWTMiddleware
 @_exported import APIMiddleware
-@_exported import Errors
+
